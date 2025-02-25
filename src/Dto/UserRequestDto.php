@@ -2,8 +2,8 @@
 
 namespace App\Dto;
 
-class UserRequestDto
+readonly class UserRequestDto
 {
-    public function __construct(public readonly string $email, public readonly  string $password) {
+    public function __construct(public  string $email, public  string $password) {
     }
 }

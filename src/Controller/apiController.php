@@ -18,10 +18,10 @@ class apiController extends controlador
     {
     }
     #[rota(path:"/ugue", name:"teste", methods: ["POST"])]
-    public function index(#[ValueResolver(DtoResolver::class)] ProductDto $product): Response{
+    public function index(): Response{
         
    
-return new Response($product->getPrice());
+return new Response('ugue');
     }
     
    

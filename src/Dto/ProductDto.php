@@ -5,14 +5,9 @@ namespace App\Dto;
 use JsonSerializable;
 
 class ProductDto implements JsonSerializable
-{
-
-
-    
+{   
     public function __construct(private string $name, private float $price)
-    {
-        
-    }
+    {}
 
     public function getName(): string
     {

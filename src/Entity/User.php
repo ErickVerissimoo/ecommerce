@@ -5,9 +5,11 @@ namespace App\Entity;
 use App\Dto\UserRequestDto;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,7 +19,7 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 500)]
     private ?string $password = null;
 
     public function getId(): ?int
@@ -49,12 +51,34 @@ class User
         return $this;
     }
 
-    public function __construct(UserRequestDto $dto =null) {
+    public function __construct(UserRequestDto $dto =null, string $email =null, string $password=null) {
 if($dto===null){
-return;
-}
+$this->email=$email;
+$this->password=$password;
+}else{
     $this->email = $dto->email;
     $this->password = $dto->password;
+return;
+}
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials(): void {
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getRoles(): array {
+        return array();
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getUserIdentifier(): string {
+        return $this->email;
+    }
 }
