@@ -8,7 +8,6 @@ use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
-#[AsTargetedValueResolver]
 class DtoResolver implements ValueResolverInterface
 {
     public function __construct(private SerializerInterface $serializer)

@@ -7,7 +7,6 @@ use Symfony\Component\HttpKernel\Attribute\AsTargetedValueResolver;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Serializer\SerializerInterface;
-#[AsTargetedValueResolver]
 class UserRequestResolver implements ValueResolverInterface
 {
    public function __construct(private SerializerInterface $serializer) {} 

@@ -2,10 +2,15 @@
 
 namespace App\Service;
 
+use App\Repository\ProductRepository;
+use Generator;
+
 class ProductService
 {
-    public function methodName()
+
+    public function __construct(private ProductRepository $repository) {}
+    public function getAllProducts(): Generator
     {
-        return "comequie uque";
+        yield $this->repository->findAll();
     }
 }

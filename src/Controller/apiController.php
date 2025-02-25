@@ -7,22 +7,22 @@ use App\Dto\ProductDto;
 use App\Entity\Product;
 use App\Service\ProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as controlador;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\ValueResolver;
 use Symfony\Component\Routing\Annotation\Route as rota;
 
 class apiController extends controlador
 {
-    public function __construct()
+    public function __construct(private ProductService $productService)
 
     {
     }
-    #[rota(path:"/ugue", name:"teste", methods: ["POST"])]
-    public function index(): Response{
+    #[rota(path:"/api/products", name:"obter todos os produtos", methods: ["GET"])]
+    public function getAll(): JsonResponse{
         
+        return new JsonResponse($this ->productService->getAllProducts());
+
    
-return new Response('ugue');
-    }
-    
-   
+}
 }
