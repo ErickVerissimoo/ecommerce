@@ -17,19 +17,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class AuthController extends controlador
 {
     public function __construct(private AuthService $authService) {}
-    #[rota(path:"/api/login", name:"login_route", methods: ["POST"])]
-    public function login(#[ValueResolver(UserRequestResolver::class)] UserRequestDto $request,
-    UserPasswordHasherInterface $hasher):JsonResponse{
-        
-        
-        
-        return new JsonResponse(
-[
-    "comequie" => $request->email
-]
 
-        );
-    }
 #[rota(path:"/api/register", name:"", methods: ["POST"])]
     public function register(#[ValueResolver(UserRequestResolver::class)]UserRequestDto $dto): JsonResponse
     {
