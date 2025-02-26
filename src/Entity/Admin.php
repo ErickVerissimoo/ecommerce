@@ -2,15 +2,13 @@
 
 namespace App\Entity;
 
-use App\Dto\UserRequestDto;
-use App\Repository\UserRepository;
+use App\Repository\AdminRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[ORM\Entity(repositoryClass: AdminRepository::class)]
+#[ORM\Table(name: '`admin`')]
+class Admin
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,12 +18,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 500)]
+    #[ORM\Column(length: 255)]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Roles::class)]
     private array $roles = [Roles::USER, Roles::ADM];
-
+    #[ORM\PrePersist]
 
 
     public function getId(): ?int
@@ -57,30 +55,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function __construct(string $email , string $password) {
-        $this->email = $email;
-        $this->password = $password;
-}
-    
+    /**
+     * @return Roles[]
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
 
-    /**
-     * @inheritDoc
-     */
-    public function eraseCredentials(): void {
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    public function getRoles(): array {
-        return array_map(fn($role) => $role->value, $this->roles);
-    }
-    
-    
-    /**
-     * @inheritDoc
-     */
-    public function getUserIdentifier(): string {
-        return $this->email;
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

@@ -25,7 +25,7 @@ class AuthService
         if($this->repository->findOneBy(['email'=> $dto->email])) {
 throw new Exception('entity exists');
         }
-$user=        new User($dto);
+$user=        new User($dto->email, $dto->password);
 $hashed = $this->hasher->hashPassword($user, $dto->password);
 $user->setPassword($hashed);
 $this->repository->getEntityManager()->persist($user);

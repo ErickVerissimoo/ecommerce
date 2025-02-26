@@ -4,38 +4,11 @@ namespace App\Dto;
 
 use JsonSerializable;
 
-class ProductDto implements JsonSerializable
+class ProductDto 
 {   
-    public function __construct(private string $name, private float $price)
+    public function __construct(public string $name, public float $price, public string $description)
     {}
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
-        return $this;
-    }
-
-    public function getPrice(): float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize():array {
-        return get_object_vars($this);
-    }
 }
