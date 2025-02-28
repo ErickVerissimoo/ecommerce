@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Dto\ProductDto;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -62,4 +63,11 @@ class Product
 
         return $this;
     }
+
+public function __construct(ProductDto $dto){
+    $this->name= $dto->name;
+    $this->description= $dto->description;
+    $this->price= $dto->price;
+}
+
 }

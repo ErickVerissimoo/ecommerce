@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Dto\OrderItemDto;
 use App\Repository\OrderItemRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\PostLoad;
 
 #[ORM\Entity(repositoryClass: OrderItemRepository::class)]
 class OrderItem
@@ -23,6 +25,13 @@ class OrderItem
 
     #[ORM\Column]
     private ?int $quantidade = null;
+    private ?float $totalPrice = 0;
+
+#[PostLoad]
+    public function getTotalPrice(){
+        $totalPrice = $this->quantidade * $this->getProduct()->getPrice();
+return $totalPrice;
+    }
 
     public function getId(): ?int
     {
@@ -64,4 +73,8 @@ class OrderItem
 
         return $this;
     }
+
+
+
+
 }
