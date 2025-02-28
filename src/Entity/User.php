@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Dto\UserRequestDto;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private ?string $username = null;
 
     #[ORM\Column(length: 500)]
     private ?string $password = null;
@@ -43,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        return $this->username;
     }
 
     public function setEmail(string $email): static
@@ -66,7 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function __construct(string $email , string $password) {
-        $this->email = $email;
+        $this->username = $email;
         $this->password = $password;
         $this->orders = new ArrayCollection();
 }
@@ -90,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @inheritDoc
      */
     public function getUserIdentifier(): string {
-        return $this->email;
+        return $this->username;
     }
 
     /**

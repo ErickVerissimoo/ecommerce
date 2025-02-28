@@ -6,9 +6,6 @@
 parameters:
 
 services:
-  App\Dto\UserRequestResolver:
-    tags:
-      - { name: controller.argument_value_resolver, priority: 100 }
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.

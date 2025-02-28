@@ -4,6 +4,6 @@ namespace App\Dto;
 
 readonly class UserRequestDto
 {
-    public function __construct(public  string $email, public  string $password) {
+    public function __construct(public  string $username, public  string $password) {
     }
 }

@@ -44,4 +44,14 @@ public function saveProduct(ProductDto $product): void{
     
 }
 
+public function updateProduct(ProductDto $product){
+$produto = $this->repository->find($product->id);
+$produto->setName($product->name);
+$produto->setDescription($product->description);
+$produto->setPrice($product->price);
+$this->repository->getEntityManager()->persist($produto);
+$this->repository->getEntityManager()->flush();
+
+}
+
 }

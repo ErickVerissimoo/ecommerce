@@ -11,6 +11,6 @@
         "**/bin":true,
         "**/public":true,
         "**/migrations":true,
-
+        "**/config":true
     }
 }
