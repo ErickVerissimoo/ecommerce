@@ -1,7 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
-
+namespace App\Service;
 use App\Dto\PaymentDto;
 use Stripe\Customer;
 use Stripe\PaymentIntent;
@@ -16,7 +15,7 @@ class StripePaymentService
     public function __construct()
     {
         
-        Stripe::setApiKey('sk_test_51Qxdr0JyCJeGjWWyKXsBIo19uHdbjRC5hrqfwHKEZDpox4IMnn5DaiM9YxS1OqRSXD7rTv8d2RL7JSDhv4mUbL3y00NTfkq8lE');
+        Stripe::setApiKey(getenv('STRIPE_KEY'));
     }
 public function pay(PaymentDto $paymentDto)
 {

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Dto\OrderItemDto;
+use App\Dto\PaymentDto;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
@@ -15,7 +16,8 @@ use DateTimeImmutable;
 
 class OrderService
 {
-    public function __construct(private readonly OrderRepository $repository, private readonly UserRepository $userRepository){
+    public function __construct(private readonly OrderRepository $repository, private readonly UserRepository $userRepository,
+    private readonly StripePaymentService $payment){
     }
     public function createOrder(string $email, OrderItemDto $item){
         $order = new Order;
@@ -31,9 +33,19 @@ class OrderService
         $user->addOrder($order);
 
         $this->userRepository->getEntityManager()->persist($user);
-        $this->userRepository->getEntityManage()->rflush();
+        $this->userRepository->getEntityManager()->flush();
         return $order;
     }
+
+
+public function payOrder(PaymentDto $paymentDto)
+{
+    $this->payment->pay($paymentDto);
+
+    $order = $this->repository->find($paymentDto->orderId);
+    $order-> setOrderStatus(Status::FINALIZADO);
+}
+
 
     }
 
