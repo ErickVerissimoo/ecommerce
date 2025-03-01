@@ -31,7 +31,7 @@ class OrderService
         $user->addOrder($order);
 
         $this->userRepository->getEntityManager()->persist($user);
-        $this->userRepository->getEntityManager()->flush();
+        $this->userRepository->getEntityManage()->rflush();
         return $order;
     }
 

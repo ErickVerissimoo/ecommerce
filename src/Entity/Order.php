@@ -23,7 +23,6 @@ class Order
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Ignore]
     private ?User $user = null;
 
     #[ORM\Column(enumType: Status::class)]
