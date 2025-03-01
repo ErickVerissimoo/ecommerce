@@ -2,6 +2,9 @@
 
 namespace App\Service;
 use App\Dto\PaymentDto;
+use App\Entity\Status;
+use App\Repository\OrderRepository;
+use Stripe\Charge;
 use Stripe\Customer;
 use Stripe\PaymentIntent;
 use Stripe\Refund;
@@ -12,13 +15,18 @@ class StripePaymentService
 {
   
 
-    public function __construct()
+    public function __construct(private OrderRepository $orderRepository)
     {
         
         Stripe::setApiKey(getenv('STRIPE_KEY'));
     }
 public function pay(PaymentDto $paymentDto)
 {
+
+    $order = $this->orderRepository->find($paymentDto->orderId);
+    $order->setOrderStatus(Status::FINALIZADO);
+    $this->orderRepository->getEntityManager()->persist($order);
+    
     $token = $this->generateTokenPayment($paymentDto->getArrayPayment());
     $charge = Charge::create([
         'amount'=> $paymentDto->amount,

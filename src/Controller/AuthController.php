@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Dto\UserRequestDto;
 use App\Service\AuthService;
-use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\AbstractFOSRestController as Controller;
 use FOS\RestBundle\Controller\Annotations\Post;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
-class AuthController extends AbstractFOSRestController
+class AuthController extends Controller
 {
      public function __construct(private AuthService $authService) {}
      
