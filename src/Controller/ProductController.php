@@ -15,13 +15,22 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 #[Route(path:'/api/products')]
-class apiController extends Controller{
+class ProductController extends Controller{
     public function __construct(private ProductService $productService){}
     #[Get]
     public function getAll() {
         
 return $this->json($this->productService->getAllProducts());
     }
+
+    #[Get(path:'/{maxprice}/{minprice}')]
+    public function getAllOrdered(int $maxprice, int $minprice)
+     {
+
+        
+        }
+
+
 
 #[Post]
 #[IsGranted(Roles::ADM->value)]

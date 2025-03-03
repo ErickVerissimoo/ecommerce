@@ -16,7 +16,7 @@ class Admin
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private ?string $username = null;
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
@@ -33,7 +33,7 @@ class Admin
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        return $this->username;
     }
 
     public function setEmail(string $email): static

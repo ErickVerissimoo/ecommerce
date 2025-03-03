@@ -5,9 +5,6 @@ use App\Dto\PaymentDto;
 use App\Entity\Status;
 use App\Repository\OrderRepository;
 use Stripe\Charge;
-use Stripe\Customer;
-use Stripe\PaymentIntent;
-use Stripe\Refund;
 use Stripe\Stripe;
 use Stripe\Token;
 

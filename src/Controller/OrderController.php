@@ -6,6 +6,8 @@ use App\Dto\OrderItemDto;
 use App\Dto\PaymentDto;
 use App\Service\OrderService;
 use FOS\RestBundle\Controller\AbstractFOSRestController as Controller;
+use FOS\RestBundle\Controller\Annotations\Delete;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\Route;
@@ -30,8 +32,17 @@ public function pay(#[MapRequestPayload] PaymentDto $dto)
     $this->order->payOrder($dto);
     return $this->json(['message' => 'order payed']);
 }
+#[Delete]
+public function cancelProduct(#[MapRequestPayload] PaymentDto $dto)
+{
+    $this->order->cancelOrder($dto);
+    return $this->json(['message'=> 'deleted']);
+}
+#[Get(path:'/{id}')]
+public function getOrder(int $id){
 
+return $this->json($this->order->getOrderById($id));
 
-
+}
 
 }

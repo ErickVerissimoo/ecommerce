@@ -8,11 +8,10 @@ use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
 use App\Entity\Status;
-use App\Entity\User;
 use App\Repository\OrderRepository;
 use App\Repository\UserRepository;
-use DateTime;
 use DateTimeImmutable;
+use Exception;
 
 class OrderService
 {
@@ -45,7 +44,18 @@ public function payOrder(PaymentDto $paymentDto)
     $order = $this->repository->find($paymentDto->orderId);
     $order-> setOrderStatus(Status::FINALIZADO);
 }
+public function cancelOrder(PaymentDto $dto){
+    $order = $this->repository->find($dto->orderId);
+    $order->setStatus(Status::CANCELADO);
+    $this->repository->getEntityManager()->persist($order);
+    $this->userRepository->getEntityManager()->flush();
+    return $order;
 
+}
+
+public function getOrderById(int $id){
+return $this->repository->find($id)?? throw new Exception('entity not founded');
+}
 
     }
 

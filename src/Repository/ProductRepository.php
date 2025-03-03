@@ -15,29 +15,27 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+public function save(Product $product): ?Product{
+    $this->_em->persist($product);
+    $this->_em->flush();
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+}
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+public function between(int $min, int $max){
+$em = $this->getEntityManager();
+$query = $em->createQuery(
+ 'SELECT e FROM App\Entity\Product e
+        WHERE e.price BETWEEN :min AND :max'
+
+);
+$query->setParameters([
+    'min'=> $min,
+    'max'=> $max
+]);
+return $query->getArrayResult();
+
+
+}
+
 }

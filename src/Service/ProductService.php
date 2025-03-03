@@ -35,12 +35,8 @@ class ProductService
     }
 
 public function saveProduct(ProductDto $product): void{
-    $produto = new Product();
-    $produto->setName($product->name);
-    $produto->setDescription( $product->description);
-    $produto ->setPrice($product->price);
-    $this->repository->getEntityManager()->persist($produto);
-    $this->repository->getEntityManager()->flush();
+    $produto = new Product($product);
+    $this->repository->save($produto);
     
 }
 
