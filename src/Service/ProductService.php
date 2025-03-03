@@ -11,9 +11,11 @@ class ProductService
 {
 
     public function __construct(private ProductRepository $repository) {}
-    public function getAllProducts(): Generator
+    public function getAllProducts(?float $minprice=null, ?float $maxprice =null): array
     {
-        yield $this->repository->findAll();
+return $this->repository->between($minprice, $maxprice);
+        
+        
     }
  public function getProductById(int $id): Product{
     $product = $this->repository->find($id);
@@ -49,5 +51,8 @@ $this->repository->getEntityManager()->persist($produto);
 $this->repository->getEntityManager()->flush();
 
 }
-
+public function getAllBetween(int $min, int $max)
+{
+    return $this->repository->between($min, $max);
+}
 }

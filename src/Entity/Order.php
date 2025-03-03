@@ -6,31 +6,40 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\Ignore;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 class Order
-{
+{    #[Groups('order:read')]
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[Groups('order:read')]
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?User $user = null;
+    #[Groups('order:read')]
 
     #[ORM\Column(enumType: Status::class)]
     private ?Status $order_status = null;
 
     /**
      * @var Collection<int, OrderItem>
-     */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'itemOrder', orphanRemoval: true, cascade:['persist', 'merge'])]
+     */    
+    #[Groups('order:read')]
+
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'itemOrder', orphanRemoval: true, cascade:['persist', 'refresh'])]
     private Collection $orderItems;
 
     public function __construct()
@@ -107,5 +116,11 @@ class Order
         }
 
         return $this;
+    }
+    #[SerializedName('user_id')]
+
+    #[Groups('order:read')]
+    public function getUserId(){
+        return $this->user->getId();
     }
 }

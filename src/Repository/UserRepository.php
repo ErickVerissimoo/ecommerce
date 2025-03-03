@@ -28,4 +28,10 @@ throw new \Exception('entity already exists');
 
 }
 
+public function delete(User $user)
+{
+    $this->getEntityManager()->remove($user);
+    $this->getEntityManager()->flush();
+}
+
 }

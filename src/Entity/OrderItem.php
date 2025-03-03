@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Dto\OrderItemDto;
 use App\Repository\OrderItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\PostLoad;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Entity(repositoryClass: OrderItemRepository::class)]
 class OrderItem
@@ -17,6 +17,7 @@ class OrderItem
 
     #[ORM\ManyToOne(inversedBy: 'orderItems')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?Order $itemOrder = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

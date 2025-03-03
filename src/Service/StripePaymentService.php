@@ -22,8 +22,7 @@ public function pay(PaymentDto $paymentDto)
 
     $order = $this->orderRepository->find($paymentDto->orderId);
     $order->setOrderStatus(Status::FINALIZADO);
-    $this->orderRepository->getEntityManager()->persist($order);
-    
+    $this->orderRepository->save($order);
     $token = $this->generateTokenPayment($paymentDto->getArrayPayment());
     $charge = Charge::create([
         'amount'=> $paymentDto->amount,

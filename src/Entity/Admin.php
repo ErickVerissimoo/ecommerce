@@ -23,13 +23,22 @@ class Admin
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: Roles::class)]
     private array $roles = [Roles::USER, Roles::ADM];
-    #[ORM\PrePersist]
 
 
     public function getId(): ?int
     {
         return $this->id;
     }
+    public function __construct(User $user){
+        $this->id = $user->getId();
+        $this->username = $user->getUsername();
+        $this->password = $user->getPassword();
+        $this->roles = $user->getRoles();
+
+
+    }
+
+
 
     public function getEmail(): ?string
     {
