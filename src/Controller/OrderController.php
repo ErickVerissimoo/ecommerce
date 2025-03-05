@@ -7,18 +7,18 @@ use App\Dto\PaymentDto;
 use App\Entity\Order;
 use App\Service\OrderService;
 use FOS\RestBundle\Controller\AbstractFOSRestController as Controller;
-use FOS\RestBundle\Controller\Annotations as Routing;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
 
-#[Routing\Route(path:'/api/order')]
+#[Rest\Route(path:'/api/order')]
 class OrderController extends Controller
 {
     public function __construct(private OrderService $order){}
-    #[Routing\Post]
+    #[Rest\Post]
 public function create( UserInterface $user,#[MapRequestPayload] OrderItemDto $dto){
     $email = $user->getUserIdentifier();
 
@@ -26,20 +26,20 @@ public function create( UserInterface $user,#[MapRequestPayload] OrderItemDto $d
 
     return $this->json(['total price'=> $order->getOrderItems()->last()->getTotalPrice() ]);
 }
-#[Routing\Put]
+#[Rest\Put]
 public function pay(#[MapRequestPayload] PaymentDto $dto)
 {
   
     $this->order->payOrder($dto);
     return $this->json(['message' => 'order payed']);
 }
-#[Routing\Delete]
+#[Rest\Delete]
 public function cancelProduct(#[MapRequestPayload] PaymentDto $dto)
 {
     $this->order->cancelOrder($dto);
     return $this->json(['message'=> 'deleted']);
 }
-#[Routing\Get(path:'/{id}')]
+#[Rest\Get(path:'/{id}')]
 public function getOrder(#[MapEntity] Order $order){
 
 return $this->json(data:$order, context:['groups' => ['order:read']]);

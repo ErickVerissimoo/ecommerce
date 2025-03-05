@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Repository\AdminRepository;
 use App\Repository\UserRepository;
 
+
 class AdminService
 {
     public function __construct(private AdminRepository $admin, private UserRepository $userR){}

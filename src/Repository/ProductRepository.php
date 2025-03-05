@@ -24,7 +24,7 @@ public function save(Product $product): ?Product{
 
 public function between(?float $min, ?float $max){
 $em = $this->getEntityManager();
-if($min && $max){
+if($min!==null && $max!==null){
     $query = $em->createQuery(
         'SELECT e FROM App\Entity\Product e
                WHERE e.price BETWEEN :min AND :max'
@@ -35,15 +35,20 @@ if($min && $max){
            'max'=> $max
        ]);
        return $query->getArrayResult();
-}else if($min && !$max){
-$query = $em->createQuery('SELECT e from App\Entity\Product e where e.price>:min');
+}else if($min!==null && $max==null){
+$query = $em->createQuery('SELECT e from App\Entity\Product e where e.price>=:min');
 $query->setParameter('min', $min);
 return $query->getArrayResult();
 }
-$query = $em->createQuery('SELECT e from App\Entity\Product e where e.price<=:max');
+else if($min==null && $max!==null){
+    $query = $em->createQuery('SELECT e from App\Entity\Product e where e.price<=:max');
     $query->setParameter('max', $max);
 
     return $query->getArrayResult();
+}
+    return $this->findAll();
+
+
 
 }
 
